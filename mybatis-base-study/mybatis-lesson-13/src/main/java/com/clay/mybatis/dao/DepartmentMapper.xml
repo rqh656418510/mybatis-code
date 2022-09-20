@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.DepartmentMapper">
+
+	<resultMap id="deptResultMap" type="com.clay.mybatis.bean.Department">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<!-- collection 定义关联集合类型的属性的封装规则，ofType：指定集合里面元素的类型，select：表明当前 JavaBean 属性是调用 select 指定的方法来查出结果，column：指定哪一列的值作为参数传递给这个 select 方法 -->
+		<collection 
+			property="employees"
+			ofType="com.clay.mybatis.bean.Employee"
+			select="com.clay.mybatis.dao.EmployeeMapper.getByDept"
+			column="id" />
+	</resultMap>
+
+	<select id="getDeptById" parameterType="Long" resultMap="deptResultMap">
+		select id, name
+		from t_department
+		where id = #{id}
+	</select>
+
+</mapper>

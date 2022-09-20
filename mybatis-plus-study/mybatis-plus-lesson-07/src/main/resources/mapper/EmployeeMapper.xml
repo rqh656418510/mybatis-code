@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<select id="queryByPage" resultType="Employee">
+		select id, email, last_name as lastName, gender, age
+		from t_employee
+		where gender = #{gender}
+	</select>
+
+	<select id="queryListByPage" resultType="Employee">
+		select id, email, last_name as lastName, gender, age
+		from t_employee
+		where gender = #{gender}
+	</select>
+
+</mapper>

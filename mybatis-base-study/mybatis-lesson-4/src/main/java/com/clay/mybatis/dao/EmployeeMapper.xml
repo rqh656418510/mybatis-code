@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<select id="getEmpById" parameterType="Long" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		where id = #{id}
+	</select>
+
+	<insert id="addEmp" parameterType="com.clay.mybatis.bean.Employee">
+		insert into t_employee (last_name, gender, email)
+		values(#{lastName}, #{gender}, #{email})
+	</insert>
+
+	<update id="updateEmp" parameterType="com.clay.mybatis.bean.Employee">
+		update t_employee
+		set last_name = #{lastName}, gender = #{gender}, email = #{email}
+		where id = #{id}
+	</update>
+
+	<delete id="delEmpById" parameterType="Long">
+		delete from t_employee
+		where id = #{id}
+	</delete>
+
+	<!-- bind 标签的使用 -->
+	<select id="getByLastName" resultType="com.clay.mybatis.bean.Employee">
+		<!-- 将 OGNL 表达式的值绑定到一个变量中，这样方便后面引用这个变量的值 -->
+		<bind name="_lastName" value="'%' + lastName + '%'" />
+		select id, last_name as lastName, gender, email
+		from t_employee
+		where last_name like #{_lastName}
+	</select>
+
+</mapper>

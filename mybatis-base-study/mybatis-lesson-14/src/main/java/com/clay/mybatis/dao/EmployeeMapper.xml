@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<resultMap type="com.clay.mybatis.bean.Employee" id="employeeResultMap">
+		<!-- id：定义主键列的封装规则； column：指定列名； property：指定对应的JavaBean属性； -->
+		<id column="id" property="id" />
+		<!-- 定义普通列的封装规则，即使不指定普通列 MyBatis 也会按照默认的规则自动封装，但一般都全部写上 -->
+		<result column="last_name" property="lastName" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<!-- 使用鉴别器判断某列的值，然后根据某列的值改变封装行为 -->
+		<discriminator javaType="String" column="gender">
+			<case value="1" resultType="com.clay.mybatis.bean.Employee">
+				<!-- 定义单个级联对象的封装规则，select：表明当前 JavaBean 属性是调用 select 指定的方法来查出结果，column：指定哪一列的值作为参数传递给这个select方法 -->
+				<association
+					property="department"
+					javaType="com.clay.mybatis.bean.Department"
+					select="com.clay.mybatis.dao.DepartmentMapper.getById"
+					column="dept_id">
+				</association>
+			</case>
+		</discriminator>
+	</resultMap>
+
+	<!-- 插入数据 -->
+	<insert id="addEmp" parameterType="com.clay.mybatis.bean.Employee" useGeneratedKeys="true" keyProperty="id">
+		insert into t_employee (last_name, gender, email, dept_id)
+		values(#{employee.lastName}, #{employee.gender}, #{employee.email}, #{employee.department.id})
+	</insert>
+
+	<select id="getEmpAndDept" resultMap="employeeResultMap">
+		select id, last_name, gender, email, dept_id
+		from t_employee
+		where id = #{id}
+	</select>
+
+</mapper>

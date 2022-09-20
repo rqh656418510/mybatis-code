@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.AdminMapper">
+
+	<select id="getAdminById" parameterType="Long" resultType="com.clay.mybatis.bean.Admin">
+		select id, name, email, status
+		from t_admin
+		where id = #{id}
+	</select>
+
+	<insert id="addAdmin" parameterType="com.clay.mybatis.bean.Admin" useGeneratedKeys="true" keyProperty="id">
+		insert into t_admin (name, email, status)
+		values(#{name}, #{email}, #{status})
+	</insert>
+
+</mapper>

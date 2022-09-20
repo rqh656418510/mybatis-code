@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<!-- 指定 EhCache 作为二级缓存的实现 -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+
+	<select id="getEmpById" parameterType="Long" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		where id = #{id}
+	</select>
+
+</mapper>

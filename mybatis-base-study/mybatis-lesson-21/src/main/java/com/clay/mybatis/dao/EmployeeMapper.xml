@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<select id="getEmps" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+	</select>
+
+</mapper>

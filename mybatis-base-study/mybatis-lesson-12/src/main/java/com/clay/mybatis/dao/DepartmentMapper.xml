@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.DepartmentMapper">
+
+	<resultMap id="deptResultMap" type="com.clay.mybatis.bean.Department">
+		<id column="dept_id" property="id" />
+		<result column="dept_name" property="name" />
+		<!-- collection 定义关联集合类型的属性的封装规则，ofType：指定集合里面元素的类型 -->
+		<collection property="employees" ofType="com.clay.mybatis.bean.Employee">
+			<id column="emp_id" property="id" />
+			<result column="last_name" property="lastName" />
+			<result column="gender" property="gender" />
+			<result column="email" property="email" />
+		</collection>
+	</resultMap>
+
+	<select id="getDeptById" parameterType="Long" resultMap="deptResultMap">
+		select dept.id as dept_id, dept.name as dept_name, emp.id as emp_id, emp.last_name, emp.gender, emp.email from t_department dept
+		left join t_employee emp
+		on dept.id = emp.dept_id
+		where dept.id = #{id}
+	</select>
+
+</mapper>

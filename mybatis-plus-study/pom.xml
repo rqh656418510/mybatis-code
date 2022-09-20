@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.clay.mybatis</groupId>
+	<artifactId>mybatis-plus-study</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<modules>
+		<module>springboot-mybatis-plus-parent</module>
+		<module>spring-mybatis-plus-parent</module>
+		<module>mybatis-plus-lesson-01</module>
+		<module>mybatis-plus-lesson-02</module>
+		<module>mybatis-plus-lesson-03</module>
+		<module>mybatis-plus-lesson-04</module>
+		<module>mybatis-plus-lesson-05</module>
+		<module>mybatis-plus-lesson-06</module>
+		<module>mybatis-plus-lesson-07</module>
+		<module>mybatis-plus-lesson-08</module>
+		<module>mybatis-plus-lesson-09</module>
+		<module>mybatis-plus-lesson-10</module>
+		<module>mybatis-plus-lesson-11</module>
+		<module>mybatis-plus-lesson-12</module>
+		<module>mybatis-plus-lesson-13</module>
+		<module>mybatis-plus-lesson-14</module>
+		<module>mybatis-plus-lesson-15</module>
+		<module>mybatis-plus-lesson-16</module>
+		<module>mybatis-plus-lesson-17</module>
+	</modules>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

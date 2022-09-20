@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指定命名空间为Mapper接口类的全类名 -->
+<mapper namespace="com.clay.mybatis.dao.EmployeeMapper">
+
+	<!-- if, where 标签的使用 -->
+	<select id="getEmpsByConditionIf" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		<!-- 利用 where 标签，将查询条件头部多出来的 and 或者 or 关键字去掉 -->
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="lastName != null and lastName.trim() != ''">
+				and last_name = #{lastName}
+			</if>
+			<if test="email != null and email.trim() != ''">
+				and email = #{email}
+			</if>
+			<!-- OGNL 会自动对字符串与数字进行转换 -->
+			<if test="gender == 1 or gender == 0">
+				and gender = #{gender}
+			</if>
+		</where>
+	</select>
+
+	<!--
+		trim 标签的使用
+		- prefix：给拼接后的整个字符串加一个前缀 
+		- prefixOverrides：去掉拼接后整个字符串头部多余的字符
+		- suffix：给拼接后的整个字符串加一个后缀 
+		- suffixOverrides：去掉拼接后整个字符串尾部多余的字符
+	 -->
+	<select id="getEmpsByConditionTrim" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		<!-- 利用 trim 标签，往头部插入 where 关键字，并去掉尾部的 and 或者 or 关键字 -->
+		<trim prefix="where" suffixOverrides="and | or">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="lastName != null and lastName.trim() != ''">
+				last_name = #{lastName} and
+			</if>
+			<if test="email != null and email.trim() != ''">
+				email = #{email} and
+			</if>
+			<!-- OGNL 会自动对字符串与数字进行转换 -->
+			<if test="gender == 1 or gender == 0">
+				gender = #{gender}
+			</if>
+		</trim>
+	</select>
+
+	<!-- choose 标签的使用 -->
+	<select id="getEmpsByConditionChoose" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		<where>
+			<!-- 下述的条件判断，只有一个会被执行 -->
+			<choose>
+				<when test="id != null">
+					id = #{id}
+				</when>
+				<when test="lastName != null and lastName.trim() != ''">
+					last_name = #{lastName}
+				</when>
+				<when test="email != null and email.trim() != ''">
+					email = #{email}
+				</when>
+				<otherwise>
+					gender = 1
+				</otherwise>
+			</choose>
+		</where> 
+	</select>
+
+	<!-- set 标签的使用 -->
+	<update id="updateEmp" parameterType="com.clay.mybatis.bean.Employee">
+		update t_employee
+		<!-- 利用 set 标签，去掉更新语句中尾部多余的逗号 -->
+		<set>
+			<if test="lastName != null and lastName.trim() != ''">
+				last_name = #{lastName},
+			</if>
+			<if test="email != null and email.trim() != ''">
+				email = #{email},
+			</if>
+			<!-- OGNL 会自动对字符串与数字进行转换 -->
+			<if test="gender == 1 or gender == 0">
+				gender = #{gender}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 
+		foreach 标签的使用
+		- collection: 指定要遍历的集合，List 类型的参数会特殊处理并封装在 Map 中,Map 的 key 默认是 collection 或 list
+		- item: 将当前遍历出的元素赋值给指定的变量
+		- separator: 每个元素之间的分隔符
+		- open: 遍历出所有结果拼接一个开始的字符
+		- close: 遍历出所有结果拼接一个结束的字符
+		- index: 遍历List的时候，index就是索引；遍历Map的时候，index表示的就是Map中的key
+	-->
+	<select id="getEmpsByConditionByForeach" resultType="com.clay.mybatis.bean.Employee">
+		select id, last_name as lastName, gender, email
+		from t_employee
+		where id in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<!-- foreach 标签的批量插入数据（方式一） -->
+	<insert id="addEmps">
+		insert into t_employee(last_name, gender, email)
+		values
+		<foreach collection="emps" item="emp" separator=",">
+			(#{emp.lastName}, #{emp.gender}, #{emp.email})
+		</foreach>
+	</insert>
+
+	<!-- foreach 标签的批量插入数据（方式二） -->
+	<insert id="addEmps2">
+		<foreach collection="emps" item="emp">
+			insert into t_employee(last_name, gender, email)
+			values(#{emp.lastName}, #{emp.gender}, #{emp.email});
+		</foreach>
+	</insert>
+
+</mapper>
