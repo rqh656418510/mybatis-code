@@ -42,8 +42,8 @@ mybatis-plus:
     banner: false
     db-config:
       id-type: AUTO
-      tablePrefix: t_
-      tableUnderline: true
+      table-prefix: t_
+      table-underline: true
       logic-delete-value: 1
       logic-not-delete-value: 0
   # MyBatis 原生配置
