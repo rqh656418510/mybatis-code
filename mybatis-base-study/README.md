@@ -13,5 +13,4 @@
 - [MyBatis 入门教程之五](https://www.techgrow.cn/posts/71a2ce7f.html)
 - [MyBatis 入门教程之六](https://www.techgrow.cn/posts/77bb067c.html)
 - [MyBatis 入门教程之七](https://www.techgrow.cn/posts/c047293a.html)
-- [MyBatis 入门教程之七](https://www.techgrow.cn/posts/c047293a.html)
 - [MyBatis 入门教程之八](https://www.techgrow.cn/posts/9ed8a349.html)
