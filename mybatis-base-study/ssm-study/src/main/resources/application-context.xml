@@ -42,7 +42,7 @@
 		<!-- 数据源 -->
 		<property name="dataSource" ref="dataSource" />
 		<!-- 类型别名 -->
-		<property name="type-aliases-package" value="com.clay.mybatis.bean" />
+		<property name="typeAliasesPackage" value="com.clay.mybatis.bean" />
 		<!--指定 SQL 映射文件的位置 -->
 		<property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
 		<!-- 指定 MyBatis 全局配置文件的位置 -->
